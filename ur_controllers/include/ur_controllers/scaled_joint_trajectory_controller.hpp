@@ -37,6 +37,10 @@
 #ifndef UR_CONTROLLERS__SCALED_JOINT_TRAJECTORY_CONTROLLER_HPP_
 #define UR_CONTROLLERS__SCALED_JOINT_TRAJECTORY_CONTROLLER_HPP_
 
+#include <memory>
+#include <string>
+#include <vector>
+
 #include "angles/angles.h"
 #include "joint_trajectory_controller/joint_trajectory_controller.hpp"
 #include "joint_trajectory_controller/trajectory.hpp"
@@ -57,6 +61,7 @@ public:
   controller_interface::InterfaceConfiguration state_interface_configuration() const override;
 
   CallbackReturn on_activate(const rclcpp_lifecycle::State& state) override;
+  CallbackReturn on_configure(const rclcpp_lifecycle::State& state) override;
 
   controller_interface::return_type update(const rclcpp::Time& time, const rclcpp::Duration& period) override;
 
@@ -74,6 +79,9 @@ protected:
 private:
   double scaling_factor_;
   realtime_tools::RealtimeBuffer<TimeData> time_data_;
+  std::unique_ptr<std::reference_wrapper<hardware_interface::LoanedStateInterface>> scaling_state_interface_;
+  static bool contains_interface_type(const std::vector<std::string>& interface_type_list,
+                                      const std::string& interface_type);
 };
 }  // namespace ur_controllers
 

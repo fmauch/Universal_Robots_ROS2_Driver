@@ -36,6 +36,7 @@
 //----------------------------------------------------------------------
 
 #include <memory>
+#include <string>
 #include <vector>
 
 #include "ur_controllers/scaled_joint_trajectory_controller.hpp"
@@ -57,18 +58,31 @@ CallbackReturn ScaledJointTrajectoryController::on_activate(const rclcpp_lifecyc
   time_data.period = rclcpp::Duration::from_nanoseconds(0);
   time_data.uptime = node_->now();
   time_data_.initRT(time_data);
+
   return JointTrajectoryController::on_activate(state);
+}
+
+CallbackReturn ScaledJointTrajectoryController::on_configure(const rclcpp_lifecycle::State& state)
+{
+  if (!contains_interface_type(state_interface_types_, "speed_scaling_factor")) {
+    RCLCPP_ERROR(get_node()->get_logger(), "Speed scaling interface not found in hardware interface.");
+    return CallbackReturn::ERROR;
+  }
+
+  for (auto& iface : state_interfaces_) {
+    if (iface.get_name() == "speed_scaling") {
+      scaling_state_interface_.reset(
+          new std::reference_wrapper<hardware_interface::LoanedStateInterface>(std::ref(iface)));
+    }
+  }
+
+  return ScaledJointTrajectoryController::on_configure(state);
 }
 
 controller_interface::return_type ScaledJointTrajectoryController::update(const rclcpp::Time& time,
                                                                           const rclcpp::Duration& /*period*/)
 {
-  if (state_interfaces_.back().get_name() == "speed_scaling") {
-    scaling_factor_ = state_interfaces_.back().get_value();
-  } else {
-    RCLCPP_ERROR(get_node()->get_logger(), "Speed scaling interface not found in hardware interface.");
-  }
-
+  scaling_factor_ = scaling_state_interface_->get().get_value();
   if (get_state().id() == lifecycle_msgs::msg::State::PRIMARY_STATE_INACTIVE) {
     return controller_interface::return_type::OK;
   }
@@ -255,6 +269,12 @@ controller_interface::return_type ScaledJointTrajectoryController::update(const 
 
   publish_state(state_desired, state_current, state_error);
   return controller_interface::return_type::OK;
+}
+
+bool ScaledJointTrajectoryController::contains_interface_type(const std::vector<std::string>& interface_type_list,
+                                                              const std::string& interface_type)
+{
+  return std::find(interface_type_list.begin(), interface_type_list.end(), interface_type) != interface_type_list.end();
 }
 
 }  // namespace ur_controllers
