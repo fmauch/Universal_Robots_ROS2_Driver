@@ -12,10 +12,8 @@ jobs:
     name: humble binary build
     runs-on: ubuntu-latest
     container: ghcr.io/ros-controls/ros:rolling-rhel
-    strategy:
-      fail-fast: false
-      env:
-        ROS_DISTRO: humble
+    env:
+      ROS_DISTRO: humble
     steps:
       - uses: actions/checkout@v1
         with:
