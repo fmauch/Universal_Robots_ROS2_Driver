@@ -22,6 +22,6 @@ jobs:
       # build it manually.
       - run: |
           rosdep update
-          rosdep install -y --from-path --ignore-src src
+          rosdep install -y --from-path --ignore-src src/ur_ros2_driver
           source /opt/ros/${{ env.ROS_DISTRO }}/setup.bash
           colcon build
