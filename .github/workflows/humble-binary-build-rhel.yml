@@ -1,0 +1,29 @@
+name: Humble Binary Build RHEL
+on:
+  pull_request:
+    branches:
+      - humble
+  push:
+    branches:
+      - humble
+
+jobs:
+  humble_binary_rhel:
+    name: humble binary build
+    runs-on: ubuntu-latest
+    container: ghcr.io/ros-controls/ros:rolling-rhel
+    strategy:
+      fail-fast: false
+      env:
+        ROS_DISTRO: humble
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          path: src/ur_ros2_driver
+      # As long as industrial-ci doesn't support using anything different than ubuntu, we'll just
+      # build it manually.
+      - run: |
+          rosdep update
+          rosdep install -y --from-path --ignore-src src
+          source /opt/ros/${{ env.ROS_DISTRO }}/setup.bash
+          colcon build
