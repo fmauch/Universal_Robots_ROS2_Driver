@@ -15,7 +15,7 @@ jobs:
     env:
       ROS_DISTRO: humble
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
         with:
           path: src/ur_ros2_driver
       # As long as industrial-ci doesn't support using anything different than ubuntu, we'll just
