@@ -4,8 +4,8 @@ on:
     branches:
       - humble
   push:
-    branches:
-      - humble
+    #branches:
+      #- humble
 
 jobs:
   humble_binary_rhel:
