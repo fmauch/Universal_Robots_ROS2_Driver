@@ -11,7 +11,7 @@ jobs:
   humble_binary_rhel:
     name: humble binary build
     runs-on: ubuntu-latest
-    container: ghcr.io/ros-controls/ros:rolling-rhel
+    container: ghcr.io/ros-controls/ros:humble-rhel
     env:
       ROS_DISTRO: humble
     steps:
