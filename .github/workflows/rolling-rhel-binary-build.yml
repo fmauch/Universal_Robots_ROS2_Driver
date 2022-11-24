@@ -1,19 +1,19 @@
-name: Humble Binary Build RHEL
+name: rolling Binary Build RHEL
 on:
   pull_request:
     branches:
-      - humble
+      - rolling
   push:
     #branches:
-      #- humble
+      #- rolling
 
 jobs:
-  humble_binary_rhel:
-    name: humble binary build
+  rolling_binary_rhel:
+    name: rolling binary build
     runs-on: ubuntu-latest
-    container: ghcr.io/ros-controls/ros:humble-rhel
+    container: ghcr.io/ros-controls/ros:rolling-rhel
     env:
-      ROS_DISTRO: humble
+      ROS_DISTRO: rolling
     steps:
       - uses: actions/checkout@v3
         with:
