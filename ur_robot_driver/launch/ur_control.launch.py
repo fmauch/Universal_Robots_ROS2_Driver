@@ -340,7 +340,7 @@ def launch_setup(context, *args, **kwargs):
         ur_control_node,
         dashboard_client_node,
         tool_communication_node,
-        controller_stopper_node,
+        # controller_stopper_node,
         robot_state_publisher_node,
         rviz_node,
         initial_joint_controller_spawner_stopped,

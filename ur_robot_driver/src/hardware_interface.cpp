@@ -42,6 +42,8 @@
 #include <utility>
 #include <vector>
 
+#include "hardware_interface/system_interface.hpp"
+#include "hardware_interface/types/hardware_interface_return_values.hpp"
 #include "ur_client_library/exceptions.h"
 #include "ur_client_library/ur/tool_communication.h"
 
@@ -444,17 +446,17 @@ URPositionHardwareInterface::on_activate(const rclcpp_lifecycle::State& previous
 hardware_interface::CallbackReturn
 URPositionHardwareInterface::on_deactivate(const rclcpp_lifecycle::State& previous_state)
 {
-  RCLCPP_INFO(rclcpp::get_logger("URPositionHardwareInterface"), "Stopping ...please wait...");
+  //RCLCPP_INFO(rclcpp::get_logger("URPositionHardwareInterface"), "Stopping ...please wait...");
 
-  async_thread_shutdown_ = true;
-  async_thread_->join();
-  async_thread_.reset();
+  //async_thread_shutdown_ = true;
+  //async_thread_->join();
+  //async_thread_.reset();
 
-  ur_driver_.reset();
+  //ur_driver_.reset();
 
-  unregisterUrclLogHandler();
+  //unregisterUrclLogHandler();
 
-  RCLCPP_INFO(rclcpp::get_logger("URPositionHardwareInterface"), "System successfully stopped!");
+  //RCLCPP_INFO(rclcpp::get_logger("URPositionHardwareInterface"), "System successfully stopped!");
 
   return hardware_interface::CallbackReturn::SUCCESS;
 }
@@ -572,12 +574,16 @@ hardware_interface::return_type URPositionHardwareInterface::read(const rclcpp::
 
     updateNonDoubleValues();
 
+    if (!robot_program_running_)
+    {
+      return hardware_interface::return_type::INACTIVE;
+    }
     return hardware_interface::return_type::OK;
   }
 
   RCLCPP_ERROR(rclcpp::get_logger("URPositionHardwareInterface"), "Unable to read from hardware...");
   // TODO(anyone): could not read from the driver --> return ERROR --> on error will be called
-  return hardware_interface::return_type::OK;
+  return hardware_interface::return_type::ERROR;
 }
 
 hardware_interface::return_type URPositionHardwareInterface::write(const rclcpp::Time& time,
@@ -607,6 +613,7 @@ hardware_interface::return_type URPositionHardwareInterface::write(const rclcpp:
 
 void URPositionHardwareInterface::handleRobotProgramState(bool program_running)
 {
+  RCUTILS_LOG_INFO_NAMED("URPositionHardwareInterface", "program state changed");
   robot_program_running_ = program_running;
 }
 
