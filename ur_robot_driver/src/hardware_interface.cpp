@@ -276,7 +276,7 @@ std::vector<hardware_interface::CommandInterface> URPositionHardwareInterface::e
 }
 
 hardware_interface::CallbackReturn
-URPositionHardwareInterface::on_activate(const rclcpp_lifecycle::State& previous_state)
+URPositionHardwareInterface::on_configure(const rclcpp_lifecycle::State& previous_state)
 {
   RCLCPP_INFO(rclcpp::get_logger("URPositionHardwareInterface"), "Starting ...please wait...");
 
@@ -433,6 +433,13 @@ URPositionHardwareInterface::on_activate(const rclcpp_lifecycle::State& previous
 
   RCLCPP_INFO(rclcpp::get_logger("URPositionHardwareInterface"), "System successfully started!");
 
+  return hardware_interface::CallbackReturn::SUCCESS;
+}
+
+hardware_interface::CallbackReturn
+URPositionHardwareInterface::on_activate(const rclcpp_lifecycle::State& previous_state)
+{
+  RCLCPP_INFO(rclcpp::get_logger("URPositionHardwareInterface"), "Activating HW interface");
   return hardware_interface::CallbackReturn::SUCCESS;
 }
 
