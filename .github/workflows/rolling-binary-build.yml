@@ -1,5 +1,6 @@
 name: Rolling Binary Build
 on:
+  workflow_dispatch:
   push:
     branches:
       - debug_tests
