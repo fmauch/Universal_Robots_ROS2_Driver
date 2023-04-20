@@ -230,6 +230,7 @@ controller_interface::return_type ScaledJointTrajectoryController::update(const 
 
         // check goal tolerance
         if (!before_last_point) {
+          RCLCPP_INFO_STREAM(get_node()->get_logger(), "Tolerance:\n[" << state_error.positions[0] << ", " << state_error.positions[1] << ", " << state_error.positions[2] << ", " << state_error.positions[3] << ", " << state_error.positions[4] << ", " << state_error.positions[5] << "]");
           if (!outside_goal_tolerance) {
             auto res = std::make_shared<FollowJTrajAction::Result>();
             res->set__error_code(FollowJTrajAction::Result::SUCCESSFUL);
