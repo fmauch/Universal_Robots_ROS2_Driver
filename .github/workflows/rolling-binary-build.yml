@@ -5,10 +5,10 @@ on:
       - main
   push:
     branches:
-      - main
+      - debug_tests
   schedule:
     # Run every morning to detect flakiness and broken dependencies
-    - cron: '13 4 * * *'
+    - cron: '35 * * * *'
 
 jobs:
   rolling_binary:
