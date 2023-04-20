@@ -18,7 +18,7 @@ jobs:
       fail-fast: false
       matrix:
         ROS_DISTRO: [rolling]
-        ROS_REPO: [main, testing]
+        ROS_REPO: [main]
     env:
       UPSTREAM_WORKSPACE: Universal_Robots_ROS2_Driver.${{ matrix.ROS_DISTRO }}.repos
       DOCKER_RUN_OPTS: '-v /var/run/docker.sock:/var/run/docker.sock --network ursim_net'
