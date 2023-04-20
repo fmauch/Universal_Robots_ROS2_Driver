@@ -1,13 +1,10 @@
 name: Rolling Binary Build
 on:
-  pull_request:
-    branches:
-      - main
   push:
     branches:
       - debug_tests
   schedule:
-    # Run every morning to detect flakiness and broken dependencies
+    # Run every hour to debug flakiness in tests
     - cron: '35 * * * *'
 
 jobs:
