@@ -398,13 +398,20 @@ class RobotDriverTest(unittest.TestCase):
 
     def call_action(self, action_name, goal):
         self.node.get_logger().info(f"Sending goal to action server '{action_name}'")
-        future = self.action_clients[action_name].send_goal_async(goal)
+        future = self.action_clients[action_name].send_goal_async(
+            goal,
+            feedback_callback=self.feedback_callback)
         rclpy.spin_until_future_complete(self.node, future)
 
         if future.result() is not None:
             return future.result()
         else:
             raise Exception(f"Exception while calling action: {future.exception()}")
+
+    def feedback_callback(self, feedback_msg):
+        feedback = feedback_msg.feedback
+        self.node.get_logger().info('Current setpoint: {0}'.format(feedback.desired.positions), throttle_duration_sec=1)
+        self.node.get_logger().info('Current error: {0}'.format(feedback.error.positions), throttle_duration_sec=1)
 
     def get_result(self, action_name, goal_response, timeout):
         self.node.get_logger().info(
