@@ -73,32 +73,32 @@ TRAJECTORIES = {
         {
             "positions": [0.304943, -0.978438, 0.891114, -1.42144, -1.72737, 0.204458],
             "velocities": [-5.57244e-05, 0.0461017, -0.498813, 0.452714, 1.13123e-05, -5.70261e-05],
-            "time_from_start": Duration(sec=0, nanosec=257005),
+            "time_from_start": Duration(sec=0, nanosec=257005000),
         },
         {
             "positions": [0.30493, -0.969934, 0.818666, -1.3575, -1.72737, 0.204445],
             "velocities": [-6.99323e-05, 0.0885967, -0.621143, 0.53255, 1.41965e-05, -7.15658e-05],
-            "time_from_start": Duration(sec=0, nanosec=382078),
+            "time_from_start": Duration(sec=0, nanosec=382078000),
         },
         {
             "positions": [0.30493, -0.955802, 0.736308, -1.28927, -1.72737, 0.204445],
             "velocities": [2.02079e-05, 0.122921, -0.622149, 0.499228, -4.10228e-06, 2.06799e-05],
-            "time_from_start": Duration(sec=0, nanosec=514344),
+            "time_from_start": Duration(sec=0, nanosec=514344000),
         },
         {
             "positions": [0.30493, -0.934311, 0.640431, -1.21489, -1.72737, 0.204445],
             "velocities": [-6.05417e-06, 0.156698, -0.626669, 0.469971, 1.22901e-06, -6.19559e-06],
-            "time_from_start": Duration(sec=0, nanosec=668323),
+            "time_from_start": Duration(sec=0, nanosec=668323000),
         },
         {
             "positions": [0.30493, -0.902023, 0.523852, -1.1306, -1.72737, 0.204445],
             "velocities": [2.13286e-06, 0.175704, -0.581675, 0.405972, -4.32984e-07, 2.18268e-06],
-            "time_from_start": Duration(sec=0, nanosec=857960),
+            "time_from_start": Duration(sec=0, nanosec=857960000),
         },
         {
             "positions": [0.30493, -0.850002, 0.367943, -1.02671, -1.72737, 0.204445],
             "velocities": [0, 0, 0, 0, 0, 0],
-            "time_from_start": Duration(sec=1, nanosec=310300),
+            "time_from_start": Duration(sec=1, nanosec=310300000),
         },
     ],
     "traj5": [
