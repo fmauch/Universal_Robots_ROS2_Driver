@@ -1,0 +1,10 @@
+forwarding_controller:
+  joints: {
+    type: string_array,
+    default_value: [],
+    description: "Names of joints used by the controller",
+    read_only: true,
+    validation: {
+      unique<>: null,
+    }
+  }

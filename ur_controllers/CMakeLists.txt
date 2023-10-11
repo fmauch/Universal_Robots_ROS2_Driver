@@ -40,6 +40,11 @@ include_directories(include)
 
 
 generate_parameter_library(
+  forwarding_controller_parameters
+  src/forwarding_controller_parameters.yaml
+)
+
+generate_parameter_library(
   gpio_controller_parameters
   src/gpio_controller_parameters.yaml
 )
@@ -55,6 +60,7 @@ generate_parameter_library(
 )
 
 add_library(${PROJECT_NAME} SHARED
+  src/forwarding_controller.cpp
   src/scaled_joint_trajectory_controller.cpp
   src/speed_scaling_state_broadcaster.cpp
   src/gpio_controller.cpp)
@@ -63,6 +69,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
   include
 )
 target_link_libraries(${PROJECT_NAME}
+  forwarding_controller_parameters
   gpio_controller_parameters
   speed_scaling_state_broadcaster_parameters
   scaled_joint_trajectory_controller_parameters
@@ -102,5 +109,13 @@ ament_export_include_directories(
 ament_export_libraries(
   ${PROJECT_NAME}
 )
+
+
+if(BUILD_TESTING)
+  find_package(ament_cmake_gtest REQUIRED)
+
+  ament_add_gtest(test_forwarding_controller test/test_forwarding_controller.cpp)
+  target_link_libraries(test_forwarding_controller ${PROJECT_NAME})
+endif()
 
 ament_package()
