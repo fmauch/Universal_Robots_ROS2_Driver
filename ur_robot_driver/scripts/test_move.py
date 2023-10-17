@@ -9,23 +9,16 @@ from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
 from control_msgs.action import FollowJointTrajectory
 
 TRAJECTORIES = {
-    "reset": [
-        {
-            "positions": [0.043128, -1.28824, 1.37179, -1.82208, -1.63632, -2.13071],
-            "velocities": [0, 0, 0, 0, 0, 0],
-            "time_from_start": Duration(sec=4, nanosec=0),
-        },
-    ],
     "traj0": [
         {
             "positions": [0.043128, -1.28824, 1.37179, -1.82208, -1.63632, -2.13071],
             "velocities": [0, 0, 0, 0, 0, 0],
-            "time_from_start": Duration(sec=0, nanosec=0),
+            "time_from_start": Duration(sec=4, nanosec=0),
         },
         {
             "positions": [-0.195016, -1.70093, 0.902027, -0.944217, -1.52982, -0.195171],
             "velocities": [0, 0, 0, 0, 0, 0],
-            "time_from_start": Duration(sec=4, nanosec=0),
+            "time_from_start": Duration(sec=8, nanosec=0),
         },
     ],
     "traj1": [
@@ -38,91 +31,6 @@ TRAJECTORIES = {
             "positions": [0.30493, -0.982258, 0.955637, -1.48215, -1.72737, 0.204445],
             "velocities": [0, 0, 0, 0, 0, 0],
             "time_from_start": Duration(sec=8, nanosec=0),
-        },
-    ],
-    "traj2": [
-        {
-            "positions": [0.30493, -0.982258, 0.955637, -1.48215, -1.72737, 0.204445],
-            "velocities": [0, 0, 0, 0, 0, 0],
-            "time_from_start": Duration(sec=0, nanosec=0),
-        },
-        {
-            "positions": [0.298479, -0.988688, 1.04161, -1.56271, -1.72777, 0.197927],
-            "velocities": [0, 0, 0, 0, 0, 0],
-            "time_from_start": Duration(sec=4, nanosec=0),
-        },
-    ],
-    "traj3": [
-        {
-            "positions": [0.298479, -0.988688, 1.04161, -1.56271, -1.72777, 0.197927],
-            "velocities": [0, 0, 0, 0, 0, 0],
-            "time_from_start": Duration(sec=0, nanosec=0),
-        },
-        {
-            "positions": [0.30493, -0.982258, 0.955637, -1.48215, -1.72737, 0.204445],
-            "velocities": [0, 0, 0, 0, 0, 0],
-            "time_from_start": Duration(sec=2, nanosec=0),
-        },
-    ],
-    "traj4": [
-        {
-            "positions": [0.30493, -0.982258, 0.955637, -1.48215, -1.72737, 0.204445],
-            "velocities": [0, 0, 0, 0, 0, 0],
-            "time_from_start": Duration(sec=0, nanosec=0),
-        },
-        {
-            "positions": [0.304943, -0.978438, 0.891114, -1.42144, -1.72737, 0.204458],
-            "velocities": [-5.57244e-05, 0.0461017, -0.498813, 0.452714, 1.13123e-05, -5.70261e-05],
-            "time_from_start": Duration(sec=0, nanosec=257005000),
-        },
-        {
-            "positions": [0.30493, -0.969934, 0.818666, -1.3575, -1.72737, 0.204445],
-            "velocities": [-6.99323e-05, 0.0885967, -0.621143, 0.53255, 1.41965e-05, -7.15658e-05],
-            "time_from_start": Duration(sec=0, nanosec=382078000),
-        },
-        {
-            "positions": [0.30493, -0.955802, 0.736308, -1.28927, -1.72737, 0.204445],
-            "velocities": [2.02079e-05, 0.122921, -0.622149, 0.499228, -4.10228e-06, 2.06799e-05],
-            "time_from_start": Duration(sec=0, nanosec=514344000),
-        },
-        {
-            "positions": [0.30493, -0.934311, 0.640431, -1.21489, -1.72737, 0.204445],
-            "velocities": [-6.05417e-06, 0.156698, -0.626669, 0.469971, 1.22901e-06, -6.19559e-06],
-            "time_from_start": Duration(sec=0, nanosec=668323000),
-        },
-        {
-            "positions": [0.30493, -0.902023, 0.523852, -1.1306, -1.72737, 0.204445],
-            "velocities": [2.13286e-06, 0.175704, -0.581675, 0.405972, -4.32984e-07, 2.18268e-06],
-            "time_from_start": Duration(sec=0, nanosec=857960000),
-        },
-        {
-            "positions": [0.30493, -0.850002, 0.367943, -1.02671, -1.72737, 0.204445],
-            "velocities": [0, 0, 0, 0, 0, 0],
-            "time_from_start": Duration(sec=1, nanosec=310300000),
-        },
-    ],
-    "traj5": [
-        {
-            "positions": [0.30493, -0.850006, 0.367955, -1.02671, -1.72737, 0.204445],
-            "velocities": [0, 0, 0, 0, 0, 0],
-            "time_from_start": Duration(sec=0, nanosec=0),
-        },
-        {
-            "positions": [-1.73736, -2.26675, 1.99658, -1.296, -1.57509, -2.32499],
-            "velocities": [0, 0, 0, 0, 0, 0],
-            "time_from_start": Duration(sec=4, nanosec=0),
-        },
-    ],
-    "traj6": [
-        {
-            "positions": [-1.73736, -2.26675, 1.99658, -1.296, -1.57509, -2.32499],
-            "velocities": [0, 0, 0, 0, 0, 0],
-            "time_from_start": Duration(sec=0, nanosec=0),
-        },
-        {
-            "positions": [-1.66795, -1.87629, 1.8111, -1.5007, -1.57476, -2.25559],
-            "velocities": [0, 0, 0, 0, 0, 0],
-            "time_from_start": Duration(sec=3, nanosec=0),
         },
     ],
 }
