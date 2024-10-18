@@ -42,6 +42,9 @@
 #include <cmath>
 #include <sstream>
 
+#include <rclcpp/duration.hpp>
+#include <rclcpp/qos.hpp>
+
 #include <controller_interface/controller_interface.hpp>
 #include <rclcpp/logging.hpp>
 #include <builtin_interfaces/msg/duration.hpp>
@@ -94,12 +97,17 @@ PassthroughTrajectoryController::on_configure(const rclcpp_lifecycle::State& pre
 
 void PassthroughTrajectoryController::start_action_server(void)
 {
+  auto options = rcl_action_server_get_default_options();
+  auto feedback_qos = rclcpp::QoS(rclcpp::QoSInitialization::from_rmw(options.feedback_topic_qos));
+  feedback_qos.lifespan(rclcpp::Duration(0, 100));
+  feedback_qos.reliable();
+  options.feedback_topic_qos = feedback_qos.get_rmw_qos_profile();
   send_trajectory_action_server_ = rclcpp_action::create_server<control_msgs::action::FollowJointTrajectory>(
       get_node(), std::string(get_node()->get_name()) + "/follow_joint_trajectory",
       std::bind(&PassthroughTrajectoryController::goal_received_callback, this, std::placeholders::_1,
                 std::placeholders::_2),
       std::bind(&PassthroughTrajectoryController::goal_cancelled_callback, this, std::placeholders::_1),
-      std::bind(&PassthroughTrajectoryController::goal_accepted_callback, this, std::placeholders::_1));
+      std::bind(&PassthroughTrajectoryController::goal_accepted_callback, this, std::placeholders::_1), options);
   return;
 }
 
