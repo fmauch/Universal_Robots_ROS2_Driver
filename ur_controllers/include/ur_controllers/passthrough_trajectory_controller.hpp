@@ -118,6 +118,7 @@ private:
 
   RealtimeGoalHandleBuffer rt_active_goal_;         ///< Currently active action goal, if any.
   rclcpp::TimerBase::SharedPtr goal_handle_timer_;  ///< Timer to frequently check on the running goal
+  rclcpp::TimerBase::SharedPtr feedback_timer_;
   realtime_tools::RealtimeBuffer<std::unordered_map<std::string, size_t>> joint_trajectory_mapping_;
 
   rclcpp::Duration action_monitor_period_ = rclcpp::Duration(50ms);

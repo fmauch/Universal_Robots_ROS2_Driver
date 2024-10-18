@@ -46,6 +46,7 @@
 #include <rclcpp/logging.hpp>
 #include <builtin_interfaces/msg/duration.hpp>
 #include <lifecycle_msgs/msg/state.hpp>
+#include "control_msgs/action/follow_joint_trajectory.hpp"
 
 #include "ur_controllers/passthrough_trajectory_controller.hpp"
 
@@ -555,6 +556,14 @@ void PassthroughTrajectoryController::goal_accepted_callback(
   goal_handle_timer_.reset();
   goal_handle_timer_ = get_node()->create_wall_timer(action_monitor_period_.to_chrono<std::chrono::nanoseconds>(),
                                                      std::bind(&RealtimeGoalHandle::runNonRealtime, rt_goal));
+  feedback_timer_.reset();
+  feedback_timer_ =
+      get_node()->create_wall_timer(action_monitor_period_.to_chrono<std::chrono::nanoseconds>(), [goal_handle]() {
+        if (goal_handle->is_executing()) {
+          auto feedback = std::make_shared<control_msgs::action::FollowJointTrajectory::Feedback>();
+          goal_handle->publish_feedback(feedback);
+        }
+      });
   trajectory_active_ = true;
   return;
 }
