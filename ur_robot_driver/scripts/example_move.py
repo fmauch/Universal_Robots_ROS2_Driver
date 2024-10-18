@@ -52,14 +52,28 @@ TRAJECTORIES = {
             "time_from_start": Duration(sec=4, nanosec=0),
         },
         {
-            "positions": [-0.195016, -1.70093, 0.902027, -0.944217, -1.52982, -0.195171],
+            "positions": [
+                -0.195016,
+                -1.70093,
+                0.902027,
+                -0.944217,
+                -1.52982,
+                -0.195171,
+            ],
             "velocities": [0, 0, 0, 0, 0, 0],
             "time_from_start": Duration(sec=8, nanosec=0),
         },
     ],
     "traj1": [
         {
-            "positions": [-0.195016, -1.70094, 0.902027, -0.944217, -1.52982, -0.195171],
+            "positions": [
+                -0.195016,
+                -1.70094,
+                0.902027,
+                -0.944217,
+                -1.52982,
+                -0.195171,
+            ],
             "velocities": [0, 0, 0, 0, 0, 0],
             "time_from_start": Duration(sec=0, nanosec=0),
         },
@@ -130,6 +144,12 @@ class JTCClient(rclpy.node.Node):
         if traj_name:
             self.execute_trajectory(traj_name)
 
+    def feedback_callback(self, msg):
+        self.get_logger().info(
+            f"Feedback at time {msg.feedback.header.stamp.sec}.{msg.feedback.header.stamp.nanosec}:\nActual positions: {msg.feedback.actual.positions}",
+            throttle_duration_sec=0.5,
+        )
+
     def execute_trajectory(self, traj_name):
         self.get_logger().info(f"Executing trajectory {traj_name}")
         goal = FollowJointTrajectory.Goal()
@@ -140,7 +160,7 @@ class JTCClient(rclpy.node.Node):
             JointTolerance(position=0.01, velocity=0.01, name=self.joints[i]) for i in range(6)
         ]
 
-        self._send_goal_future = self._action_client.send_goal_async(goal)
+        self._send_goal_future = self._action_client.send_goal_async(goal, self.feedback_callback)
         self._send_goal_future.add_done_callback(self.goal_response_callback)
 
     def goal_response_callback(self, future):
